@@ -30,7 +30,10 @@ install_local() {
 
 install_local
 
-for host in "$NAMENODE_HOST" "${DATANODE_HOSTS[@]}"; do
+declare -A seen_hosts=()
+for host in "$NAMENODE_HOST" "$SECONDARY_NAMENODE_HOST" "${DATANODE_HOSTS[@]}"; do
+  [[ -n "${seen_hosts[$host]:-}" ]] && continue
+  seen_hosts["$host"]=1
   [[ "$host" == "$EDGE_HOST" ]] && continue
   scp -i "$INTERNAL_SSH_KEY" "$ARCHIVE" "${HDFS_USER}@${host}:${ARCHIVE}"
   ssh -i "$INTERNAL_SSH_KEY" "${HDFS_USER}@${host}" \

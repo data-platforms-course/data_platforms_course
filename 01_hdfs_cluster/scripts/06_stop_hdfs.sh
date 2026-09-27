@@ -20,6 +20,8 @@ for host in "${DATANODE_HOSTS[@]}"; do
   fi
 done
 
+ssh -i "$INTERNAL_SSH_KEY" "${HDFS_USER}@${SECONDARY_NAMENODE_HOST}" \
+  "${HADOOP_HOME}/bin/hdfs --daemon stop secondarynamenode"
+
 ssh -i "$INTERNAL_SSH_KEY" "${HDFS_USER}@${NAMENODE_HOST}" \
-  "${HADOOP_HOME}/bin/hdfs --daemon stop secondarynamenode; \
-   ${HADOOP_HOME}/bin/hdfs --daemon stop namenode"
+  "${HADOOP_HOME}/bin/hdfs --daemon stop namenode"

@@ -33,7 +33,10 @@ configure_local() {
 configure_local
 mkdir -p "$HDFS_DATA_ROOT/tmp" "$HDFS_DATA_ROOT/datanode"
 
-for host in "$NAMENODE_HOST" "${DATANODE_HOSTS[@]}"; do
+declare -A seen_hosts=()
+for host in "$NAMENODE_HOST" "$SECONDARY_NAMENODE_HOST" "${DATANODE_HOSTS[@]}"; do
+  [[ -n "${seen_hosts[$host]:-}" ]] && continue
+  seen_hosts["$host"]=1
   [[ "$host" == "$EDGE_HOST" ]] && continue
   scp -i "$INTERNAL_SSH_KEY" "$WORK_DIR/core-site.xml" "$WORK_DIR/hdfs-site.xml" "$WORK_DIR/workers" \
     "${HDFS_USER}@${host}:/tmp/"
@@ -47,6 +50,10 @@ done
 
 ssh -i "$INTERNAL_SSH_KEY" "${HDFS_USER}@${NAMENODE_HOST}" \
   "mkdir -p ${HDFS_DATA_ROOT}/tmp ${HDFS_DATA_ROOT}/namenode ${HDFS_DATA_ROOT}/secondary"
+if [[ "$SECONDARY_NAMENODE_HOST" != "$NAMENODE_HOST" ]]; then
+  ssh -i "$INTERNAL_SSH_KEY" "${HDFS_USER}@${SECONDARY_NAMENODE_HOST}" \
+    "mkdir -p ${HDFS_DATA_ROOT}/tmp ${HDFS_DATA_ROOT}/secondary"
+fi
 for host in "${DATANODE_HOSTS[@]}"; do
   [[ "$host" == "$EDGE_HOST" ]] && continue
   ssh -i "$INTERNAL_SSH_KEY" "${HDFS_USER}@${host}" \

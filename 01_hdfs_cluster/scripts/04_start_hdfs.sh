@@ -19,8 +19,10 @@ if ! ssh -i "$INTERNAL_SSH_KEY" "${HDFS_USER}@${NAMENODE_HOST}" \
 fi
 
 ssh -i "$INTERNAL_SSH_KEY" "${HDFS_USER}@${NAMENODE_HOST}" \
-  "${HADOOP_HOME}/bin/hdfs --daemon start namenode && \
-   ${HADOOP_HOME}/bin/hdfs --daemon start secondarynamenode"
+  "${HADOOP_HOME}/bin/hdfs --daemon start namenode"
+
+ssh -i "$INTERNAL_SSH_KEY" "${HDFS_USER}@${SECONDARY_NAMENODE_HOST}" \
+  "${HADOOP_HOME}/bin/hdfs --daemon start secondarynamenode"
 
 for host in "${DATANODE_HOSTS[@]}"; do
   if [[ "$host" == "$EDGE_HOST" ]]; then

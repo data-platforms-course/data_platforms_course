@@ -22,6 +22,15 @@ Hadoop 3.4.3 выбран потому, что он совместим с Java 1
 Для учебного стенда допустимо совмещение NameNode и Secondary NameNode на
 одной машине, а edge-node может одновременно быть клиентом Hadoop и DataNode.
 
+```text
+                 team-16-nn
+        NameNode + Secondary NameNode
+                    /    |    \
+                   /     |     \
+       team-16-en  team-16-00  team-16-01
+        DataNode     DataNode    DataNode
+```
+
 ## Требования
 
 - Ubuntu Linux;
@@ -70,6 +79,32 @@ chmod +x scripts/*.sh
 `05_verify_hdfs.sh` дополнительно записывает маленький файл в HDFS и проверяет
 его три реплики.
 
+Результаты успешной проверки учебного стенда приведены в папке `evidence/`.
+
+## Диагностика
+
+Проверить HDFS-процессы на конкретном узле:
+
+```bash
+jps
+```
+
+Проверить состояние кластера и число активных DataNode:
+
+```bash
+/opt/hadoop/bin/hdfs dfsadmin -report
+```
+
+Проверить логи конкретного сервиса:
+
+```bash
+tail -n 100 /opt/hadoop/logs/hadoop-team-namenode-*.log
+tail -n 100 /opt/hadoop/logs/hadoop-team-datanode-*.log
+```
+
+В случае недоступности DataNode нужно проверить процесс `DataNode`, разрешение
+имени NameNode с этого узла и последние строки лога DataNode.
+
 ## Структура
 
 - `scripts/` — сценарии установки, настройки, запуска и проверки кластера;
@@ -79,5 +114,3 @@ chmod +x scripts/*.sh
 Перед запуском скриптов необходимо скопировать `config/cluster.env.example` в
 `config/cluster.env` и указать параметры своей среды. Файл `cluster.env` не
 публикуется: он содержит инфраструктурные параметры конкретного стенда.
-
-> Приватные SSH-ключи, пароли, токены и иные секреты в репозиторий не добавляются.

@@ -1,0 +1,16 @@
+HDFS DFSAdmin report, successful run
+
+Live datanodes (3)
+
+DataNode: team-16-en
+Decommission Status : Normal
+
+DataNode: team-16-00
+Decommission Status : Normal
+
+DataNode: team-16-01
+Decommission Status : Normal
+
+Under replicated blocks: 0
+Blocks with corrupt replicas: 0
+Missing blocks: 0

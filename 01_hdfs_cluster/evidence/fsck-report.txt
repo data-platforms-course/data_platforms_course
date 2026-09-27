@@ -1,0 +1,11 @@
+HDFS FSCK report, successful run
+
+/user/team/hdfs-test.txt 18 bytes, replicated: replication=3, 1 block(s): OK
+Live_repl=3
+Status: HEALTHY
+
+Default replication factor: 3
+Average block replication: 3.0
+Missing blocks: 0
+Corrupt blocks: 0
+Missing replicas: 0

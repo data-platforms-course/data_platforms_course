@@ -22,15 +22,6 @@ Hadoop 3.4.3 выбран потому, что он совместим с Java 1
 Для учебного стенда допустимо совмещение NameNode и Secondary NameNode на
 одной машине, а edge-node может одновременно быть клиентом Hadoop и DataNode.
 
-```text
-                 team-16-nn
-        NameNode + Secondary NameNode
-                    /    |    \
-                   /     |     \
-       team-16-en  team-16-00  team-16-01
-        DataNode     DataNode    DataNode
-```
-
 ## Требования
 
 - Ubuntu Linux;

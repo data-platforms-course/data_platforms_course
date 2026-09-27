@@ -1,0 +1,12 @@
+HDFS verification summary
+
+Live datanodes (3)
+Decommission Status : Normal
+Under replicated blocks: 0
+Blocks with corrupt replicas: 0
+Missing blocks: 0
+
+Test file check
+replication=3
+Live_repl=3
+Status: HEALTHY

@@ -1,6 +1,6 @@
 # Практическое задание №1: HDFS-кластер
 
-Здесь будет решение по автоматизированному развёртыванию HDFS-кластера с NameNode, Secondary NameNode и тремя DataNode.
+Автоматизированное развёртывание HDFS-кластера с NameNode, Secondary NameNode и тремя DataNode.
 
 ## План развёртывания
 
@@ -10,6 +10,65 @@
 4. Инициализировать NameNode, запустить сервисы и проверить кластер.
 
 Hadoop 3.4.3 выбран потому, что он совместим с Java 11. Hadoop 3.5.0 требует Java 17 на серверных узлах.
+
+## Схема ролей
+
+| Роль | Размещение |
+|---|---|
+| NameNode | `NAMENODE_HOST` |
+| Secondary NameNode | `SECONDARY_NAMENODE_HOST` |
+| DataNode | все хосты из `DATANODE_HOSTS` |
+
+Для учебного стенда допустимо совмещение NameNode и Secondary NameNode на
+одной машине, а edge-node может одновременно быть клиентом Hadoop и DataNode.
+
+## Требования
+
+- Ubuntu Linux;
+- Java 11;
+- SSH с edge-node на внутренние узлы;
+- пользователь без запроса пароля для `sudo`;
+- имена всех узлов разрешаются внутри кластера.
+
+## Быстрый запуск
+
+Все скрипты запускаются на edge-node. Сначала подготовьте параметры конкретного
+стенда:
+
+```bash
+cp config/cluster.env.example config/cluster.env
+chmod +x scripts/*.sh
+```
+
+Отредактируйте `config/cluster.env`: укажите пользователя, имена хостов,
+расположение внутреннего SSH-ключа и список из трёх DataNode.
+
+Затем выполните:
+
+```bash
+./scripts/01_install_java.sh
+./scripts/02_install_hadoop.sh
+./scripts/03_configure_hdfs.sh
+./scripts/04_start_hdfs.sh
+./scripts/05_verify_hdfs.sh
+```
+
+`04_start_hdfs.sh` форматирует NameNode только когда каталог метаданных ещё не
+содержит `current/`. Не удаляйте этот каталог и не форматируйте NameNode на
+кластере с данными: это уничтожит метаданные файловой системы.
+
+## Проверка результата
+
+Основная проверка:
+
+```bash
+/opt/hadoop/bin/hdfs dfsadmin -report
+```
+
+Успешный результат содержит `Live datanodes (3)`, а в отчёте отсутствуют
+потерянные, повреждённые и недореплицированные блоки. Скрипт
+`05_verify_hdfs.sh` дополнительно записывает маленький файл в HDFS и проверяет
+его три реплики.
 
 ## Структура
 

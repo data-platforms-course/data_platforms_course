@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <property>
+    <name>dfs.replication</name>
+    <value>3</value>
+  </property>
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file://__HDFS_DATA_ROOT__/namenode</value>
+  </property>
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file://__HDFS_DATA_ROOT__/datanode</value>
+  </property>
+  <property>
+    <name>dfs.namenode.checkpoint.dir</name>
+    <value>file://__HDFS_DATA_ROOT__/secondary</value>
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address</name>
+    <value>__NAMENODE_HOST__:8020</value>
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-bind-host</name>
+    <value>0.0.0.0</value>
+  </property>
+  <property>
+    <name>dfs.namenode.http-address</name>
+    <value>__NAMENODE_HOST__:9870</value>
+  </property>
+  <property>
+    <name>dfs.namenode.http-bind-host</name>
+    <value>0.0.0.0</value>
+  </property>
+  <property>
+    <name>dfs.namenode.secondary.http-address</name>
+    <value>__SECONDARY_NAMENODE_HOST__:9868</value>
+  </property>
+  <property>
+    <name>dfs.webhdfs.enabled</name>
+    <value>true</value>
+  </property>
+</configuration>

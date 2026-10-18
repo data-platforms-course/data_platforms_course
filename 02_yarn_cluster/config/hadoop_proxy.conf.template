@@ -1,0 +1,30 @@
+limit_except GET HEAD { deny all; }
+
+proxy_set_header Host $http_host;
+proxy_set_header Accept-Encoding "";
+
+sub_filter_once off;
+sub_filter_types text/css text/javascript application/javascript application/json;
+sub_filter '__NAMENODE_HOST__:8088' '$host:8088';
+sub_filter '__NAMENODE_HOST__:19888' '$host:19888';
+sub_filter '__NAMENODE_HOST__.__DOMAIN__:8088' '$host:8088';
+sub_filter '__NAMENODE_HOST__.__DOMAIN__:19888' '$host:19888';
+sub_filter '__NAMENODE_HOST__:9870' '$host:9870';
+sub_filter '__SECONDARY_NAMENODE_HOST__:9868' '$host:9868';
+sub_filter '__DATANODE_0__:8042' '$host:18042';
+sub_filter '__DATANODE_1__:8042' '$host:18043';
+sub_filter '__DATANODE_2__:8042' '$host:18044';
+sub_filter '__DATANODE_0__:9864' '$host:19864';
+sub_filter '__DATANODE_1__:9864' '$host:19865';
+sub_filter '__DATANODE_2__:9864' '$host:19866';
+sub_filter '__DATANODE_0__.__DOMAIN__:8042' '$host:18042';
+sub_filter '__DATANODE_1__.__DOMAIN__:8042' '$host:18043';
+sub_filter '__DATANODE_2__.__DOMAIN__:8042' '$host:18044';
+sub_filter '__DATANODE_0__.__DOMAIN__:9864' '$host:19864';
+sub_filter '__DATANODE_1__.__DOMAIN__:9864' '$host:19865';
+sub_filter '__DATANODE_2__.__DOMAIN__:9864' '$host:19866';
+
+proxy_redirect http://__NAMENODE_HOST__:8088/ http://$host:8088/;
+proxy_redirect http://__NAMENODE_HOST__:19888/ http://$host:19888/;
+proxy_redirect http://__NAMENODE_HOST__.__DOMAIN__:8088/ http://$host:8088/;
+proxy_redirect http://__NAMENODE_HOST__.__DOMAIN__:19888/ http://$host:19888/;

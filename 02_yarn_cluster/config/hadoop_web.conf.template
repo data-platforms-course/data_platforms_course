@@ -1,0 +1,85 @@
+# ResourceManager
+server {
+    listen 8088;
+    location / {
+        proxy_pass http://__NAMENODE_HOST__:8088;
+        include snippets/hadoop_proxy.conf;
+    }
+}
+
+# HistoryServer
+server {
+    listen 19888;
+    location / {
+        proxy_pass http://__NAMENODE_HOST__:19888;
+        include snippets/hadoop_proxy.conf;
+    }
+}
+
+# NameNode
+server {
+    listen 9870;
+    location / {
+        proxy_pass http://__NAMENODE_HOST__:9870;
+        include snippets/hadoop_proxy.conf;
+    }
+}
+
+# Secondary NameNode
+server {
+    listen 9868;
+    location / {
+        proxy_pass http://__SECONDARY_NAMENODE_HOST__:9868;
+        include snippets/hadoop_proxy.conf;
+    }
+}
+
+# NodeManagers
+server {
+    listen 18042;
+    location / {
+        proxy_pass http://__DATANODE_0__:8042;
+        include snippets/hadoop_proxy.conf;
+    }
+}
+
+server {
+    listen 18043;
+    location / {
+        proxy_pass http://__DATANODE_1__:8042;
+        include snippets/hadoop_proxy.conf;
+    }
+}
+
+server {
+    listen 18044;
+    location / {
+        proxy_pass http://__DATANODE_2__:8042;
+        include snippets/hadoop_proxy.conf;
+    }
+}
+
+# DataNodes
+server {
+    listen 19864;
+    location / {
+        proxy_pass http://__DATANODE_0__:9864;
+        include snippets/hadoop_proxy.conf;
+    }
+}
+
+server {
+    listen 19865;
+    location / {
+        proxy_pass http://__DATANODE_1__:9864;
+        include snippets/hadoop_proxy.conf;
+    }
+}
+
+server {
+    listen 19866;
+    location / {
+        proxy_pass http://__DATANODE_2__:9864;
+        include snippets/hadoop_proxy.conf;
+    }
+}

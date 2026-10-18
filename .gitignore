@@ -1,5 +1,9 @@
 # Environment-specific cluster configuration
 01_hdfs_cluster/config/cluster.env
+02_yarn_cluster/config/cluster.env
+
+# Local test MapReduce job, not published
+02_yarn_cluster/examples/
 
 # Secrets and local SSH material
 *.pem

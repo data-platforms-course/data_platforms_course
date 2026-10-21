@@ -1,6 +1,9 @@
 # Environment-specific cluster configuration
 01_hdfs_cluster/config/cluster.env
 02_yarn_cluster/config/cluster.env
+03_hive_cluster/config/cluster.env
+03_hive_cluster/config/hive-site.xml
+03_hive_cluster/config/hivemetastore-site.xml
 
 # Local test MapReduce job, not published
 02_yarn_cluster/examples/

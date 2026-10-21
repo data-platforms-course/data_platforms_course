@@ -1,0 +1,18 @@
+HiveServer2 concurrent client check
+Date: 2026-10-21
+Host: team-16-en
+HiveServer2: Apache Hive 4.0.0-alpha-2
+
+Two independent Beeline sessions were opened at the same time. Both used the
+same operating-system account (`team`) and stayed connected while each ran:
+
+SHOW PARTITIONS course_hw3.events;
+
+Client 1 query ID: team_20261021205127_6e94080c-340e-484a-8bec-672d16d12006
+Client 1 result: 2 rows selected
+
+Client 2 query ID: team_20261021205227_7973b05b-8838-4075-af13-09d9660abc83
+Client 2 result: 2 rows selected
+
+Both clients returned the partitions event_date=2026-10-01 and
+event_date=2026-10-02.
